@@ -1,14 +1,13 @@
-import { useContext, useState } from 'react'
-import StoreContext from '../store/storeProvider'
+import { useState } from 'react'
+import { useStore, useDispatch } from '../store/storeProvider'
 import { types } from '../store/storeReducer'
 
 export default function ReducerComponent() {
-  //AL USAR EL useContext Y PASARLE EL CONTEXTO QUE HEMOS CREADO, ESTO NOS DEVUELVE EL ARRAY QUE COLOCAMOS COMO VALOR POR DEFECTO
-  //ESE ARRAY TIENE EL STATE Y EL DISPATCH
-  //CUANDO HACEMOS state?.target ESTO INDICA QUE EL ELEMENTO SOLO SE RENDERIZARÁ CUANDO SU VALOR SEA TRUE, DE LO CONTRARIO, SE OMITE
-  //EL DISPATCH Y STATE SE USAN DE LA MISMA MANERA
   const [name, setName] = useState('')
-  const [state, dispatch] = useContext(StoreContext)
+  const state = useStore()
+  const dispatch = useDispatch()
+  //AHORA, EL STATE Y EL DISPATCH LOS SACAMOS DE LOS HOOKS CREADOS
+  //YA NO USAMOS AQUI EL useContext
 
   const handleChangeName = (e) => {
     setName(e.target.value)

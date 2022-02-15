@@ -1,38 +1,26 @@
-import { useState } from 'react'
-import { useStore, useDispatch } from '../store/storeProvider'
-import { types } from '../store/storeReducer'
+import { useContext, useState } from 'react'
+import UserContext from '../Context/UserContext'
+import { types } from '../reducers/userReducer'
 
 export default function ReducerComponent() {
-  const [name, setName] = useState('')
-  const state = useStore()
-  const dispatch = useDispatch()
-  //AHORA, EL STATE Y EL DISPATCH LOS SACAMOS DE LOS HOOKS CREADOS
-  //YA NO USAMOS AQUI EL useContext
+  const { store, dispatch } = useContext(UserContext)
+  const [nameInput, setNameInput] = useState('')
 
-  const handleChangeName = (e) => {
-    setName(e.target.value)
+  const handleInputChange = (e) => {
+    setNameInput(e.target.value)
   }
 
   return (
     <>
-      <p>Name: {state?.name}</p>
-      <p>Last name: {state?.lastName}</p>
+      <p>{store.name}</p>
       <br />
-
-      <input
-        type='text'
-        placeholder='New Name'
-        value={name}
-        onChange={handleChangeName}
-      />
+      <input type='text' value={nameInput} onChange={handleInputChange}></input>
       <button
-        onClick={() => dispatch({ type: types.CHANGE_NAME, payload: name })}
+        onClick={() =>
+          dispatch({ type: types.CHANGE_NAME, payload: nameInput })
+        }
       >
-        Change Name
-      </button>
-      <br />
-      <button onClick={() => dispatch({ type: types.DELETE_LAST_NAME })}>
-        Delete last name
+        Cambiar nomber
       </button>
     </>
   )
